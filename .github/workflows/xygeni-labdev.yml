@@ -3,8 +3,7 @@ on:
   workflow_dispatch:  # Allows manual triggering
   # no push triggers
   # no pull request triggers
-  schedule:
-    - cron: '00 02 * * *'
+  # no schedule triggers
 
 jobs:
   xygeni-scan:
@@ -25,6 +24,6 @@ jobs:
         uses: xygeni/xygeni-action@v3.2.0
         id: Xygeni-Scanner
         with:
-          xygeni_url: https://apidemo.xygeni.io/deps-doctor-service
+          xygeni_url: https://apidev.xygeni.io/deps-doctor-service
           token: ${{ secrets.XYGENI_TOKEN }}
           gh_token: ${{ secrets.PAT_FOR_XYGENI_SCAN }}
